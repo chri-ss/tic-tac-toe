@@ -1,0 +1,30 @@
+.header {
+    display: flex;
+    justify-content: center;
+    height: 5vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.main-content {
+    display: flex;
+    height: 90vh;
+}
+
+.player-container {
+    width: 25%;
+}
+
+.board-container {
+    flex-grow: 1;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    height: 5vh;
+}
