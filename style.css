@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     height: 5vh;
+    border: 1px solid black;
 }
 
 .container {
@@ -17,14 +18,23 @@
 
 .player-container {
     width: 25%;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .board-container {
     flex-grow: 1;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .footer {
     display: flex;
     justify-content: center;
+    border: 1px solid black;
     height: 5vh;
 }
