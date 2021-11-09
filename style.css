@@ -41,3 +41,23 @@
     height: 5vh;
     box-sizing: border-box;
 }
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: space-between;
+    justify-content: space-between;
+    height: 25rem;
+    width: 25rem;
+    
+}
+
+.square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 90px;
+    height: 32%;
+    width: 32%;
+    border: 1px solid black;
+}
