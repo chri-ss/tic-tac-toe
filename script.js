@@ -15,8 +15,9 @@ const game = (() => {
     const startGame = () => {
         let p1 = document.querySelector('.player-one');
         let p2 = document.querySelector('.player-two');
-        player1 = createPlayer(p1.textContent, 'X');
-        player2 = createPlayer(p2.textContent, 'O');
+        player1 = createPlayer(p1.value, 'X');
+        player2 = createPlayer(p2.value, 'O');
+        displayController.buildBoard();
 
         console.log(player1, player2);
     }
@@ -50,5 +51,17 @@ const displayController = (() => {
         })
     }
 
-    return {buildBoard, initNewGame}
+    const removeForm = () => {
+        let form = document.querySelector('.start-form');
+        
+        form.classList.add('hide-form');
+    }
+
+    const addForm = () => {
+        let form = document.querySelector('.start-form');
+        
+        form.classList.remove('hide-form');
+    }
+
+    return {buildBoard, removeForm, addForm}
 })();

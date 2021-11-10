@@ -22,6 +22,10 @@ form {
     flex-direction: column;
 }
 
+.hide-form {
+    display: none;
+}
+
 .player-container {
     width: 25%;
     border: 1px solid black;
