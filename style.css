@@ -11,20 +11,27 @@
     flex-direction: column;
 }
 
-
 .main-content {
     display: flex;
     height: 90vh;
     box-sizing: border-box;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+}
+
 .player-container {
     width: 25%;
     border: 1px solid black;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
+
 
 .board-container {
     flex-grow: 1;
