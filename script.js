@@ -8,7 +8,7 @@ const gameBoard = (() => {
         return board;
     }
     
-    const addMarker = () => {
+    const addMarkers = () => {
         let gridCells = Array.from(document.querySelectorAll('.square'));
         gridCells.forEach(cell => {
             cell.addEventListener('click', () => {
@@ -28,7 +28,7 @@ const gameBoard = (() => {
         })
     }
 
-    return { updateBoard, addMarker};
+    return { updateBoard, addMarkers};
 })();
 
 const game = (() => {
@@ -41,6 +41,7 @@ const game = (() => {
         player2.turn = false;
         displayController.buildBoard();
         displayController.removeForm();
+        gameBoard.addMarkers();
 
         return {player1, player2}
     }
