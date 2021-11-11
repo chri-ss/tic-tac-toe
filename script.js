@@ -1,9 +1,15 @@
 const gameBoard = (() => {
-    let board = ['', '', '', '', '', '', '', '', '']
-
+    let board = []
+    
     const updateBoard = () => {
-        for (i = 0; i < board.length; ++i) {
-            board[i] = 'X';
+        const cells = Array.from(document.querySelectorAll('.square'));
+        for (let i = 0; i < 9; ++i)
+        {
+            board.pop();
+        }
+        for(let i = 0; i < 9; ++i)
+        {
+            board.push(cells[i].textContent);
         }
         return board;
     }
@@ -72,7 +78,8 @@ const displayController = (() => {
         boardContainer.appendChild(grid);
         for (let i = 0; i < 9; ++i) {
             const square = document.createElement('button');
-            square.classList.add('square');
+            const classes = ['square', i.toString()]
+            square.classList.add(...classes);
             grid.appendChild(square);
             square.textContent = '';
         }
