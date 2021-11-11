@@ -12,13 +12,13 @@ const gameBoard = (() => {
         let gridCells = Array.from(document.querySelectorAll('.square'));
         gridCells.forEach(cell => {
             cell.addEventListener('click', () => {
-                if (player1.turn === true)
+                if (player1.turn === true && cell.textContent === '')
                 {
                     cell.textContent = player1.team;
                     player1.turn = false;
                     player2.turn = true;
                 }
-                else if (player2.turn === true)
+                else if (player2.turn === true && cell.textContent === '')
                 {
                     cell.textContent = player2.team;
                     player2.turn = false;
@@ -71,9 +71,10 @@ const displayController = (() => {
         grid.classList.add('grid');
         boardContainer.appendChild(grid);
         for (let i = 0; i < 9; ++i) {
-            const square = document.createElement('div');
+            const square = document.createElement('button');
             square.classList.add('square');
             grid.appendChild(square);
+            square.textContent = '';
         }
     }
 
