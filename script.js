@@ -24,6 +24,8 @@ const gameBoard = (() => {
                     player1.turn = false;
                     player2.turn = true;
                     displayController.updateTurnDisplay();
+                    updateBoard();
+                    game.checkForWinner(board, player1.team)
                 }
                 else if (player2.turn === true && cell.textContent === '')
                 {
@@ -31,7 +33,10 @@ const gameBoard = (() => {
                     player2.turn = false;
                     player1.turn = true; 
                     displayController.updateTurnDisplay();
+                    updateBoard();
+                    game.checkForWinner(board, player2.team)
                 }
+
 
             })
         })
@@ -56,8 +61,30 @@ const game = (() => {
         return {player1, player2}
     }
 
+    const checkForWinner = (board, sym) => {
+        let player;
+
+        sym === 'X' ? player = player1 : player = player2; 
+
+        let winConditions = [board[0] === sym && board[1] === sym && board[2] === sym,
+                            board[3] === sym && board[4] === sym && board[5] === sym,
+                            board[6] === sym && board[7] === sym && board[8] === sym,
+                            board[0] === sym && board[3] === sym && board[6] === sym,
+                            board[1] === sym && board[4] === sym && board[7] === sym,
+                            board[2] === sym && board[5] === sym && board[8] === sym,
+                            board[0] === sym && board[4] === sym && board[8] === sym,
+                            board[2] === sym && board[4] === sym && board[6] === sym,]
+
+        for(let i = 0; i < 8; ++i)
+        {
+            if (winConditions[i])
+            {
+                player.win = true;
+            }
+        }
+    }
     
-    return {startGame}
+    return {startGame, checkForWinner}
 })();
 
 const createPlayer = (name, team) => {
