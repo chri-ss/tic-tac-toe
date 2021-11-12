@@ -23,13 +23,16 @@ const gameBoard = (() => {
                     cell.textContent = player1.team;
                     player1.turn = false;
                     player2.turn = true;
+                    displayController.updateTurnDisplay();
                 }
                 else if (player2.turn === true && cell.textContent === '')
                 {
                     cell.textContent = player2.team;
                     player2.turn = false;
                     player1.turn = true; 
+                    displayController.updateTurnDisplay();
                 }
+
             })
         })
     }
@@ -48,6 +51,7 @@ const game = (() => {
         displayController.buildBoard();
         displayController.removeForm();
         gameBoard.addMarkers();
+        displayController.updateTurnDisplay();
 
         return {player1, player2}
     }
@@ -85,6 +89,18 @@ const displayController = (() => {
         }
     }
 
+    const updateTurnDisplay = () => {
+        const playerContainer = document.querySelector('.player-container');
+        if (player1.turn === true)
+        {
+            playerContainer.textContent = `${player1.name}'s turn'`;
+        }
+        else if(player2.turn === true)
+        {
+            playerContainer.textContent = `${player2.name}'s turn'`;
+        }
+    }
+
     const removeForm = () => {
         let form = document.querySelector('.start-form');
         
@@ -97,7 +113,7 @@ const displayController = (() => {
         form.classList.remove('hide-form');
     }
 
-    return {buildBoard, initNewGame, removeForm, addForm}
+    return {buildBoard, initNewGame, updateTurnDisplay, removeForm, addForm}
 })();
 
 displayController.initNewGame();
