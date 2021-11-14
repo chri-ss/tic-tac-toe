@@ -17,7 +17,7 @@ const gameBoard = (() => {
     const addMarkers = () => {
         let gridCells = Array.from(document.querySelectorAll('.square'));
         gridCells.forEach(cell => {
-            cell.addEventListener('click', function listener(){
+            cell.addEventListener('click', () => {
                 if (player1.turn === true && cell.textContent === '' && player1.win != true &&  player2.win != true)
                 {
                     cell.textContent = player1.team;
@@ -68,10 +68,6 @@ const game = (() => {
         return {player1, player2}
     }
 
-    const endGame = (player) => {
-        
-    }
-
     const checkForWinner = (board, sym) => {
         let player;
 
@@ -91,7 +87,7 @@ const game = (() => {
             if (winConditions[i])
             {
                 player.win = true;
-                endGame(player);
+                displayController.updateWinner(player);
             }
         }
     }
@@ -145,7 +141,14 @@ const displayController = (() => {
         form.classList.remove('hide-form');
     }
 
-    return {buildBoard, updateTurnDisplay, removeForm, addForm}
+    const updateWinner = (player) => {
+        const boardContainer = document.querySelector('.board-container');
+        const winMessage = document.createElement('p');
+        winMessage.textContent = `${player.name} Won!`;
+        boardContainer.appendChild(winMessage);
+    }
+
+    return {buildBoard, updateTurnDisplay, updateWinner, removeForm, addForm}
 })();
 
 game.initNewGame();
