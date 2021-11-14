@@ -17,27 +17,25 @@ const gameBoard = (() => {
     const addMarkers = () => {
         let gridCells = Array.from(document.querySelectorAll('.square'));
         gridCells.forEach(cell => {
-            cell.addEventListener('click', () => {
-                if (player1.turn === true && cell.textContent === '')
+            cell.addEventListener('click', function listener(){
+                if (player1.turn === true && cell.textContent === '' && player1.win != true &&  player2.win != true)
                 {
                     cell.textContent = player1.team;
                     player1.turn = false;
                     player2.turn = true;
                     displayController.updateTurnDisplay();
                     updateBoard();
-                    game.checkForWinner(board, player1.team)
+                    game.checkForWinner(board, player1.team);
                 }
-                else if (player2.turn === true && cell.textContent === '')
+                else if (player2.turn === true && cell.textContent === '' && player1.win != true &&  player2.win != true)
                 {
                     cell.textContent = player2.team;
                     player2.turn = false;
                     player1.turn = true; 
                     displayController.updateTurnDisplay();
                     updateBoard();
-                    game.checkForWinner(board, player2.team)
+                    game.checkForWinner(board, player2.team);
                 }
-
-
             })
         })
     }
@@ -46,6 +44,15 @@ const gameBoard = (() => {
 })();
 
 const game = (() => {
+
+    const initNewGame = () => {
+        let start = document.querySelector('.new-game');
+        start.addEventListener('click', (e) => {
+            e.preventDefault();
+            game.startGame();
+        })
+    }
+
     const startGame = () => {
         let p1 = document.querySelector('.player-one');
         let p2 = document.querySelector('.player-two');
@@ -59,6 +66,10 @@ const game = (() => {
         displayController.updateTurnDisplay();
 
         return {player1, player2}
+    }
+
+    const endGame = (player) => {
+        
     }
 
     const checkForWinner = (board, sym) => {
@@ -80,11 +91,13 @@ const game = (() => {
             if (winConditions[i])
             {
                 player.win = true;
+                endGame(player);
             }
         }
     }
+
     
-    return {startGame, checkForWinner}
+    return {initNewGame, startGame, checkForWinner}
 })();
 
 const createPlayer = (name, team) => {
@@ -93,14 +106,6 @@ const createPlayer = (name, team) => {
 }
 
 const displayController = (() => {
-
-    const initNewGame = () => {
-        let start = document.querySelector('.new-game');
-        start.addEventListener('click', (e) => {
-            e.preventDefault();
-            game.startGame();
-        })
-    }
 
     const buildBoard = () => {
         const boardContainer = document.querySelector('.board-container');
@@ -140,7 +145,7 @@ const displayController = (() => {
         form.classList.remove('hide-form');
     }
 
-    return {buildBoard, initNewGame, updateTurnDisplay, removeForm, addForm}
+    return {buildBoard, updateTurnDisplay, removeForm, addForm}
 })();
 
-displayController.initNewGame();
+game.initNewGame();
