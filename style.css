@@ -35,13 +35,12 @@ form {
     align-items: center;
 }
 
-
-
 .board-container {
     flex-grow: 1;
+    flex-direction: column-reverse;
     border: 1px solid black;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 }
 

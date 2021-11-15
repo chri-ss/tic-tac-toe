@@ -46,6 +46,12 @@ const gameBoard = (() => {
 const game = (() => {
 
     const initNewGame = () => {
+        let ai = document.getElementById('ai');
+        let p2 = document.querySelector('.player-two');
+        ai.addEventListener('change', () => {
+            p2.disabled === true ? p2.disabled = false : p2.disabled = true;
+        })
+
         let start = document.querySelector('.new-game');
         start.addEventListener('click', (e) => {
             e.preventDefault();
@@ -54,10 +60,21 @@ const game = (() => {
     }
 
     const startGame = () => {
+        let ai = document.getElementById('ai');
         let p1 = document.querySelector('.player-one');
         let p2 = document.querySelector('.player-two');
         player1 = createPlayer(p1.value, 'X');
-        player2 = createPlayer(p2.value, 'O');
+
+        if (ai.checked)
+        {
+            player2 = createPlayer('ai', 'O')
+            player2.type = 'ai';
+        }
+        else
+        {
+            player2 = createPlayer(p2.value, 'O');    
+        }
+        
         player1.turn = true;
         player2.turn = false;
         displayController.buildBoard();
@@ -71,7 +88,7 @@ const game = (() => {
     const checkForWinner = (board, sym) => {
         let player;
 
-        sym === 'X' ? player = player1 : player = player2; 
+        sym === 'X' ? player = player1 : player =    player2; 
 
         let winConditions = [board[0] === sym && board[1] === sym && board[2] === sym,
                             board[3] === sym && board[4] === sym && board[5] === sym,
