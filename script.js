@@ -25,7 +25,11 @@ const gameBoard = (() => {
                     player2.turn = true;
                     displayController.updateTurnDisplay();
                     updateBoard();
-                    game.checkForWinner(board, player1.team);
+                    if(game.checkForWinner(board, player1.team))
+                    {
+                        player1.win = true;
+                        displayController.updateWinner(player1);
+                    }
                 }
                 else if (player2.turn === true && cell.textContent === '' && player1.win != true &&  player2.win != true)
                 {
@@ -34,7 +38,11 @@ const gameBoard = (() => {
                     player1.turn = true; 
                     displayController.updateTurnDisplay();
                     updateBoard();
-                    game.checkForWinner(board, player2.team);
+                    if (game.checkForWinner(board, player2.team))
+                    {
+                        player2.win = true;
+                        displayController.updateWinner(player2);
+                    }
                 }
             })
         })
@@ -86,9 +94,6 @@ const game = (() => {
     }
 
     const checkForWinner = (board, sym) => {
-        let player;
-
-        sym === 'X' ? player = player1 : player =    player2; 
 
         let winConditions = [board[0] === sym && board[1] === sym && board[2] === sym,
                             board[3] === sym && board[4] === sym && board[5] === sym,
@@ -103,8 +108,11 @@ const game = (() => {
         {
             if (winConditions[i])
             {
-                player.win = true;
-                displayController.updateWinner(player);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
