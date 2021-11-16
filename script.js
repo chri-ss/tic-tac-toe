@@ -9,7 +9,14 @@ const gameBoard = (() => {
         }
         for(let i = 0; i < 9; ++i)
         {
-            board.push(cells[i].textContent);
+            if(cells[i].textContent != '')
+            {
+                board.push(cells[i].textContent);
+            }
+            else
+            {
+                board.push(i);
+            }
         }
         return board;
     }
@@ -174,6 +181,15 @@ const displayController = (() => {
     }
 
     return {buildBoard, updateTurnDisplay, updateWinner, removeForm, addForm}
+})();
+
+const aiController = (() => {
+
+    const getEmpties = (board) => {
+        return board.filter (cell => cell != 'X' && cell != 'O');
+    }
+
+    return {getEmpties}
 })();
 
 game.initNewGame();
