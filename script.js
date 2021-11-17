@@ -37,6 +37,10 @@ const gameBoard = (() => {
                         player1.win = true;
                         displayController.updateWinner(player1);
                     }
+                    else if (player2.type === 'ai')
+                    {
+                        aiController.makeMove();
+                    }
                 }
                 else if (player2.turn === true && cell.textContent === '' && player1.win != true &&  player2.win != true)
                 {
@@ -55,7 +59,7 @@ const gameBoard = (() => {
         })
     }
 
-    return { updateBoard, addMarkers};
+    return {board, updateBoard, addMarkers};
 })();
 
 const game = (() => {
@@ -102,18 +106,14 @@ const game = (() => {
 
     const checkForWinner = (board, sym) => {
 
-        let winConditions = [board[0] === sym && board[1] === sym && board[2] === sym,
-                            board[3] === sym && board[4] === sym && board[5] === sym,
-                            board[6] === sym && board[7] === sym && board[8] === sym,
-                            board[0] === sym && board[3] === sym && board[6] === sym,
-                            board[1] === sym && board[4] === sym && board[7] === sym,
-                            board[2] === sym && board[5] === sym && board[8] === sym,
-                            board[0] === sym && board[4] === sym && board[8] === sym,
-                            board[2] === sym && board[4] === sym && board[6] === sym,]
-
-        for(let i = 0; i < 8; ++i)
-        {
-            if (winConditions[i])
+        if (board[0] === sym && board[1] === sym && board[2] === sym ||
+            board[3] === sym && board[4] === sym && board[5] === sym ||
+            board[6] === sym && board[7] === sym && board[8] === sym ||
+            board[0] === sym && board[3] === sym && board[6] === sym ||
+            board[1] === sym && board[4] === sym && board[7] === sym ||
+            board[2] === sym && board[5] === sym && board[8] === sym ||
+            board[0] === sym && board[4] === sym && board[8] === sym ||
+            board[2] === sym && board[4] === sym && board[6] === sym)
             {
                 return true;
             }
@@ -121,7 +121,6 @@ const game = (() => {
             {
                 return false;
             }
-        }
     }
 
     
@@ -186,10 +185,67 @@ const displayController = (() => {
 const aiController = (() => {
 
     const getEmpties = (board) => {
-        return board.filter (cell => cell != 'X' && cell != 'O');
+        return board.filter(cell => cell != 'X' && cell != 'O');
     }
 
-    return {getEmpties}
+    const minimax = (board, player) => {
+        let available = getEmpties(board);
+
+        if(game.checkForWinner(board, ))
+        {
+            return {score: -10};
+        }
+        else if (game.checkForWinner(board, player2.team))
+        {
+            return {score: 10};
+        }
+        else if(available.length === 0)
+        {
+            return {score: 0};
+        }
+
+        let moves = [];
+
+        for (let i = 0; i < available.length; ++i)
+        {
+            let move = {};
+            move.index = available[i];
+            board[available[i]] = player.team;
+        }
+
+        if (player === player2)
+        {
+            let result = minimax(board, player1)
+            move.score = result.score;
+        }
+        else if(player === player1)
+        {
+            let result = minimax(board, player2)
+            move.score = result.score;    
+        }
+    }
+
+    let makeMove = () => {
+        if (player2.type ===  'ai')
+        {
+            gameBoard.updateBoard();
+            let options = getEmpties(gameBoard.board);
+            let move = Math.floor(Math.random() * (getEmpties(options).length));
+            let cells = Array.from(document.querySelectorAll('.square'));
+            cells[options[move]].textContent = 'O';
+            player2.turn = false;
+            player1.turn = true; 
+            displayController.updateTurnDisplay();
+            gameBoard.updateBoard();
+            if (game.checkForWinner(gameBoard.board, player2.team))
+            {
+                player2.win = true;
+                displayController.updateWinner(player2);
+            }
+        }
+    }
+
+    return {getEmpties, makeMove}
 })();
 
 game.initNewGame();
