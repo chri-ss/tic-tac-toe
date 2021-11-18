@@ -189,50 +189,84 @@ const aiController = (() => {
     }
 
     const minimax = (board, player) => {
-        let available = getEmpties(board);
 
-        if(game.checkForWinner(board, ))
+        const empties = getEmpties(board);
+
+        if(game.checkForWinner(board, player1.team))
         {
             return {score: -10};
         }
-        else if (game.checkForWinner(board, player2.team))
+            else if(game.checkForWinner(board, player2.team))
         {
             return {score: 10};
         }
-        else if(available.length === 0)
+        else if (empties.length === 0)
         {
             return {score: 0};
         }
 
         let moves = [];
 
-        for (let i = 0; i < available.length; ++i)
+        for(i = 0; i < empties.length; ++i)
         {
-            let move = {};
-            move.index = available[i];
-            board[available[i]] = player.team;
+            var move = {};
+            move.index = board[empties[i]];
+
+            board[empties[i]] = player;
+
+            if(player === player2.team)
+            {
+                var result = minimax(board, player1.team);
+                move.score = result.score;
+            }
+            else
+            {
+                var result = minimax(board, player2.team)
+                move.score = result.score;
+            }
+
+            board[empties[i]] = move.index;
+            moves.push(move)
         }
 
-        if (player === player2)
+        var bestMove;
+
+        if(player === player2.team)
         {
-            let result = minimax(board, player1)
-            move.score = result.score;
+            var bestScore = -10000;
+            for(var i = 0; i < moves.length; ++i)
+            {
+                if(moves[i].score > bestScore)
+                {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
         }
-        else if(player === player1)
+        else
         {
-            let result = minimax(board, player2)
-            move.score = result.score;    
+            var bestScore = 10000;
+            for(var i = 0; i < moves.length; ++i)
+            {
+                if (moves[i].score < bestScore)
+                {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
         }
+        return moves[bestMove];
     }
+
 
     let makeMove = () => {
         if (player2.type ===  'ai')
         {
             gameBoard.updateBoard();
-            let options = getEmpties(gameBoard.board);
-            let move = Math.floor(Math.random() * (getEmpties(options).length));
+            let moveToMake = minimax(gameBoard.board, player2.team)
+            console.log(moveToMake);
             let cells = Array.from(document.querySelectorAll('.square'));
-            cells[options[move]].textContent = 'O';
+            cells[moveToMake.index].textContent = player2.team;
             player2.turn = false;
             player1.turn = true; 
             displayController.updateTurnDisplay();
@@ -245,7 +279,7 @@ const aiController = (() => {
         }
     }
 
-    return {getEmpties, makeMove}
+    return {getEmpties, makeMove, minimax}
 })();
 
 game.initNewGame();
