@@ -109,6 +109,7 @@ const game = (() => {
         displayController.removeForm();
         gameBoard.addMarkers();
         displayController.updateTurnDisplay();
+        displayController.addResetButton();
 
         return {player1, player2}
     }
@@ -183,13 +184,22 @@ const displayController = (() => {
     }
 
     const updateWinner = (player) => {
-        const boardContainer = document.querySelector('.board-container');
-        const winMessage = document.createElement('p');
-        winMessage.textContent = `${player.name} Won!`;
-        boardContainer.appendChild(winMessage);
+        const playerContainer = document.querySelector('.player-container')
+        playerContainer.textContent = `${player.name} Wins!`;
     }
 
-    return {buildBoard, updateTurnDisplay, updateWinner, removeForm, addForm}
+    const addResetButton = () => {
+        const boardContainer = document.querySelector('.board-container');
+        const resetButton = document.createElement('button');
+        resetButton.textContent = 'reset';
+        boardContainer.appendChild(resetButton);
+        resetButton.addEventListener('click', () => {
+            location.reload();
+        });
+
+    }
+
+    return {buildBoard, updateTurnDisplay, updateWinner, removeForm, addForm, addResetButton}
 })();
 
 const aiController = (() => {
