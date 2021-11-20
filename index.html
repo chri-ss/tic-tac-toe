@@ -15,15 +15,22 @@
         <div class="main-content">
             <div class="player-container">
               <form class="start-form">
-                <label>Enter P1 name (X)</label>
-                <input class="player-one">
-                <label>Enter P2 name (O)</label>
-                <input class="player-two">
-                <div class="AI-select">
-                  <label>(or against AI)</label>
-                  <input type="checkbox" ID='ai'>
+                <div class="p1">
+                  <label>Enter P1 name (X)</label>
+                  <input class="player-one">
                 </div>
-                <button class="new-game">Start Game</button>
+                <div class="p2">
+                  <label>Enter P2 name (O)</label>
+                  <input class="player-two">
+                </div>
+                <div class="ai-select">
+                  <label>Play against ai</label>
+                  <input type="checkbox" ID='ai'>
+                  <div class="toggle"></div>
+                </div>
+                <div>
+                  <button class="new-game">Start Game</button>
+                </div>
               </form>
             </div>
             <div class="board-container">

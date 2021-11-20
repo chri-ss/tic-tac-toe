@@ -68,7 +68,16 @@ const game = (() => {
         let ai = document.getElementById('ai');
         let p2 = document.querySelector('.player-two');
         ai.addEventListener('change', () => {
-            p2.disabled === true ? p2.disabled = false : p2.disabled = true;
+            if (p2.disabled)
+            {
+                p2.disabled = false;
+            }
+            else
+            {
+                p2.value = '';
+                p2.disabled = true;
+            }
+
         })
 
         let start = document.querySelector('.new-game');
@@ -150,14 +159,15 @@ const displayController = (() => {
 
     const updateTurnDisplay = () => {
         const playerContainer = document.querySelector('.player-container');
-        if (player1.turn === true)
+        if (player1.turn)
         {
             playerContainer.textContent = `${player1.name}'s turn'`;
         }
-        else if(player2.turn === true)
+        else if(player2.turn)
         {
             playerContainer.textContent = `${player2.name}'s turn'`;
         }
+        
     }
 
     const removeForm = () => {
