@@ -141,8 +141,26 @@ input:focus {
     align-items: center;
 }
 
-.reset-container {
-    order: 0;
+.reset {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    width: 80%;
+    background-color: #1ECD97;
+    color: #fff;
+    border: none;
+    font-family: 'Staatliches', cursive;
+    font-size: 48px;
+    transition: all 0.25s ease;
+    letter-spacing: 8rem;
+    border-radius: 10px;
+
+}
+
+.reset:hover {
+    background-color: #fff;
+    color: #1ECD97;
 }
 
 .footer {

@@ -184,15 +184,17 @@ const displayController = (() => {
     }
 
     const updateWinner = (player) => {
-        const playerContainer = document.querySelector('.player-container')
+        const playerContainer = document.querySelector('.player-container');
+        playerContainer.style.fontSize = '50px';
         playerContainer.textContent = `${player.name} Wins!`;
     }
 
     const addResetButton = () => {
-        const boardContainer = document.querySelector('.board-container');
+        const footer = document.querySelector('.footer');
         const resetButton = document.createElement('button');
+        resetButton.classList.add('reset');
         resetButton.textContent = 'reset';
-        boardContainer.appendChild(resetButton);
+        footer.appendChild(resetButton);
         resetButton.addEventListener('click', () => {
             location.reload();
         });
