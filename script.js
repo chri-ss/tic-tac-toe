@@ -66,6 +66,7 @@ const game = (() => {
 
     const initNewGame = () => {
         let ai = document.getElementById('ai');
+        let p1 = document.querySelector('.player-one');
         let p2 = document.querySelector('.player-two');
         ai.addEventListener('change', () => {
             if (p2.disabled)
@@ -79,9 +80,13 @@ const game = (() => {
             }
 
         })
-
         let start = document.querySelector('.new-game');
         start.addEventListener('click', (e) => {
+            if(p2.value === '' && ai.checked === false || p1.value === '')
+            {
+                alert('Enter two names or play against ai');
+                return 0;
+            }
             e.preventDefault();
             game.startGame();
         })
