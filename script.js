@@ -133,8 +133,19 @@ const game = (() => {
             }
     }
 
+    const checkForTie = (board) => {
+        for(let i = 0; i < board.length; ++i)
+        {
+            if(board[i] != 'X' && board[i] != 'O')
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     
-    return {initNewGame, startGame, checkForWinner}
+    return {initNewGame, startGame, checkForWinner, checkForTie}
 })();
 
 const createPlayer = (name, team) => {
@@ -160,7 +171,12 @@ const displayController = (() => {
 
     const updateTurnDisplay = () => {
         const playerContainer = document.querySelector('.player-container');
-        if (player1.turn)
+        gameBoard.updateBoard();
+        if(game.checkForTie(gameBoard.board))
+        {   
+            updateTie();
+        }
+        else if (player1.turn)
         {
             playerContainer.textContent = `${player1.name}'s turn'`;
         }
@@ -187,6 +203,12 @@ const displayController = (() => {
         const playerContainer = document.querySelector('.player-container');
         playerContainer.style.fontSize = '50px';
         playerContainer.textContent = `${player.name} Wins!`;
+    }
+
+    const updateTie = () => {
+        const playerContainer = document.querySelector('.player-container');
+        playerContainer.style.fontSize = '50px';
+        playerContainer.textContent = 'It\'s  a tie!';
     }
 
     const addResetButton = () => {
