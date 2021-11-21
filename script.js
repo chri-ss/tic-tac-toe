@@ -82,12 +82,12 @@ const game = (() => {
         })
         let start = document.querySelector('.new-game');
         start.addEventListener('click', (e) => {
+            e.preventDefault();
             if(p2.value === '' && ai.checked === false || p1.value === '')
             {
                 alert('Enter two names or play against ai');
                 return 0;
             }
-            e.preventDefault();
             game.startGame();
         })
     }
